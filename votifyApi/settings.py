@@ -106,7 +106,7 @@ SOCIALACCOUNT_PROVIDERS = {
     },
 }
 
-ALLOWED_HOSTS = ['localhost','votifyapp.pythonanywhere.com','127.0.0.1']
+ALLOWED_HOSTS = ['*']
 
 #Django Rest Framework strategy
 
@@ -279,7 +279,7 @@ AUTH_USER_MODEL = 'authentication.User'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-DJANGO_ALLOWED_HOSTS = ['localhost','votifyapp.pythonanywhere.com','127.0.0.1']
+DJANGO_ALLOWED_HOSTS = ["*"]
 
 
 #Mailing service
