@@ -8,6 +8,8 @@ from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
 
 
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns
+
 #-----------------------------------------------------#
 #                   SWAGGER CONFIGURATION             #
 #-----------------------------------------------------#
@@ -45,3 +47,5 @@ urlpatterns = [
 
 
 ]
+
+urlpatterns += staticfiles_urlpatterns()
