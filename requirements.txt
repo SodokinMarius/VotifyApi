@@ -9,7 +9,7 @@ pymysql==1.0.2
 pip==23.0.1
 PyJWT==2.6.0
 psycopg2-binary==2.9.5
-
+social-auth-app-django==4.0.0
 dj-rest-auth==2.2.5
 
 django-allauth==0.51.0
