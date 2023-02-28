@@ -223,15 +223,17 @@ class ElectionViewSetBase(viewsets.ModelViewSet):
     @action(detail=True, methods=['get'], url_path="vote/(?P<option_id>[^/.]+)", url_name="vote")
     def vote(self, request, option_id, **kwargs):
         user = self.request.user
+        voter = None
         election = self.get_object()
         option = None
-
-        # Check if voter and election exist
-        try:
-            #user = User.objects.get(email=user)
-            voter = Voter.objects.get(user=user)
-        except Voter.DoesNotExist:
-            return Response({'message': 'Invalid voter'}, status=status.HTTP_400_BAD_REQUEST)
+        if user is None :
+            return Response({'message': 'User does not exists'}, status=status.HTTP_400_BAD_REQUEST)
+        
+        if election.progress_status != ProgressChoiceEnum.IN_PROGESS.value and user == election.creator:
+            if election.progress_status == ProgressChoiceEnum.CANCELLED.value:
+                return Response({'message': 'Cette election a été annulée !'}, status=status.HTTP_400_BAD_REQUEST)
+            elif election.progress_status == ProgressChoiceEnum.COMPLETED.value:
+                return Response({"message": "Cette election a été déjà terminé  !"}, status=status.HTTP_400_BAD_REQUEST)
 
         # Check if option exists and is for this specific election
         try:
@@ -240,7 +242,6 @@ class ElectionViewSetBase(viewsets.ModelViewSet):
             return Response({'message': 'Invalid option ID'}, status=status.HTTP_400_BAD_REQUEST)
 
         # Check if the voter has already voted in this election
-        voter = Voter.objects.get(user=user)
         if Vote.objects.filter(voter=voter, election=election).count() >= election.turn_number:
             return Response({'message': 'Vous avez déjà terminé les votes relatives à cette election'}, status=status.HTTP_400_BAD_REQUEST)
         
@@ -257,11 +258,12 @@ class ElectionViewSetBase(viewsets.ModelViewSet):
         return Response({'message': 'Vote registered successfully', 'vote_id': vote.id}, status=status.HTTP_201_CREATED)
 
     
-
     @action(detail=True, methods=['get'], url_path='stats', url_name='stats')
     def election_stats(self, request, pk=None):
         # Get the Election object
         election = self.get_object()
+        if Vote.objects.filter(election=election).values('voter').distinct().count() == 0 :
+            return Response({"message": "Pas de vote !"}, status=status.HTTP_400_BAD_REQUEST)
 
         # Check if the election is closed
         if election.progress_status != ProgressChoiceEnum.COMPLETED.value:
@@ -272,13 +274,15 @@ class ElectionViewSetBase(viewsets.ModelViewSet):
 
         # Get the total number of voters
         voters_count = Vote.objects.filter(election=election).values('voter').distinct().count()
+        print("Vote count ====+++>",voters_count)
 
         # Get the option with the highest vote count
         winning_option = Option.objects.filter(related_election=election).annotate(num_votes=Count('vote')).order_by('-num_votes').first()
 
         # Calculate the winning option's percentage of the total votes
-        if winning_option is not None:
-            winning_percentage = 100 * winning_option.num_votes / Vote.objects.filter(election=election).count()
+        vote_counter = Vote.objects.filter(election=election).count()
+        if winning_option is not None and vote_counter != 0:
+            winning_percentage = 100 * winning_option.num_votes / vote_counter
         else:
             winning_percentage = 0
 

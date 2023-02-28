@@ -204,7 +204,31 @@ CORS_ALLOW_CREDENTIALS = True
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
+
+DATABASES = {
+	'default': {
+
+		'ENGINE': "django.db.backends.mysql",
+		'NAME': "votifyAppDb",
+		'USER': "votifyAdmin",
+		'PASSWORD': "votify@admin",
+		'HOST': "localhost",
+
+  	     "OPTIONS": {
+
+            'init_command': "SET sql_mode='STRICT_TRANS_TABLES', innodb_strict_mode=1",
+            'charset': 'utf8mb4',
+            "autocommit": True,
+        },
+
+		'PORT': 3306
+		}
+
+
+	}
+
 """
+POSTGRES
 SQL_ENGINE="django.db.backends.postgresql"
 SQL_DATABASE="votifyAppDb"
 SQL_USER="votify@Admin"
@@ -223,11 +247,11 @@ DATABASES = {
     }
 }"""
 
-DB_URL ="postgres://votify01:mQn7Une9OgwjPGuDe9hTtByLpQI4zm0H@dpg-cfuhmh9a6gdrs8j70m10-a.oregon-postgres.render.com/votifyappdb"
+'''DB_URL ="postgres://votify01:mQn7Une9OgwjPGuDe9hTtByLpQI4zm0H@dpg-cfuhmh9a6gdrs8j70m10-a.oregon-postgres.render.com/votifyappdb"
 DATABASES = {
     "default": dj_database_url.parse(DB_URL)
 }
-
+'''
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
 
@@ -308,4 +332,10 @@ print("DEBUG ------------>",DEBUG)
   "access": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjc3NjMzNjgwLCJqdGkiOiIzYjVkYmYxODVmYWM0OGRlODM3NjNlMzkzOGQzMjdhOCIsInVzZXJfaWQiOiJ5YW9tYXJpdXNzb2Rva2luQGdtYWlsLmNvbSJ9.eROhQljSVuppRj83etLjjFO6iJj-fLSA-BtSWwwEp68"
 }
 
+
+En local :
+{
+  "refresh": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTY3Nzk4MTA2MCwianRpIjoiZGY5ZWYxZjBjZjM2NDMyMGJhNzJjZjQwNzE4ZjA5ZDQiLCJ1c2VyX2lkIjoieWFvbWFyaXVzc29kb2tpbkBnbWFpbC5jb20ifQ.mve298IfU0poPjrLI5LpnJBnd-QBCGQHAMZesj4ndwc",
+  "access": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjc3NjM1NDYwLCJqdGkiOiI4NDhkOTg5NjM1Yjk0YTcxYjNlN2Q1NWQwZWMwZjc2MCIsInVzZXJfaWQiOiJ5YW9tYXJpdXNzb2Rva2luQGdtYWlsLmNvbSJ9.odPb3M666L5IQ1QuwBjY35KHTJQ1r76Ep0_ozuGD08I"
+}
 """
