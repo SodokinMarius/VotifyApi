@@ -204,7 +204,7 @@ CORS_ALLOW_CREDENTIALS = True
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
-
+"""
 DATABASES = {
 	'default': {
 
@@ -225,7 +225,7 @@ DATABASES = {
 		}
 
 
-	}
+	}"""
 
 """
 POSTGRES
@@ -247,11 +247,11 @@ DATABASES = {
     }
 }"""
 
-'''DB_URL ="postgres://votify01:mQn7Une9OgwjPGuDe9hTtByLpQI4zm0H@dpg-cfuhmh9a6gdrs8j70m10-a.oregon-postgres.render.com/votifyappdb"
+DB_URL ="postgres://votify01:mQn7Une9OgwjPGuDe9hTtByLpQI4zm0H@dpg-cfuhmh9a6gdrs8j70m10-a.oregon-postgres.render.com/votifyappdb"
 DATABASES = {
     "default": dj_database_url.parse(DB_URL)
 }
-'''
+
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
 
