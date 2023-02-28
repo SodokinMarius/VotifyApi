@@ -222,13 +222,13 @@ class ElectionViewSetBase(viewsets.ModelViewSet):
          
     @action(detail=True, methods=['get'], url_path="vote/(?P<option_id>[^/.]+)", url_name="vote")
     def vote(self, request, option_id, **kwargs):
-        user_id = self.request.user
+        user = self.request.user
         election = self.get_object()
         option = None
 
         # Check if voter and election exist
         try:
-            user = User.objects.get(email=user_id)
+            #user = User.objects.get(email=user)
             voter = Voter.objects.get(user=user)
         except Voter.DoesNotExist:
             return Response({'message': 'Invalid voter'}, status=status.HTTP_400_BAD_REQUEST)
@@ -240,6 +240,7 @@ class ElectionViewSetBase(viewsets.ModelViewSet):
             return Response({'message': 'Invalid option ID'}, status=status.HTTP_400_BAD_REQUEST)
 
         # Check if the voter has already voted in this election
+        voter = Voter.objects.get(user=user)
         if Vote.objects.filter(voter=voter, election=election).count() >= election.turn_number:
             return Response({'message': 'Vous avez déjà terminé les votes relatives à cette election'}, status=status.HTTP_400_BAD_REQUEST)
         
@@ -264,11 +265,10 @@ class ElectionViewSetBase(viewsets.ModelViewSet):
 
         # Check if the election is closed
         if election.progress_status != ProgressChoiceEnum.COMPLETED.value:
-            return Response({'message': 'Cette election est toujours en cours'}, status=status.HTTP_400_BAD_REQUEST)
-        elif election.progress_status == ProgressChoiceEnum.CANCELLED.value:
-            return Response({'message': 'Cette election a été annulée !'}, status=status.HTTP_400_BAD_REQUEST)
-        elif election.progress_status == ProgressChoiceEnum.PENDING.value:
-            return Response({"message": "Cette election n'est pas encore démarré !"}, status=status.HTTP_400_BAD_REQUEST)
+            if election.progress_status == ProgressChoiceEnum.CANCELLED.value:
+                return Response({'message': 'Cette election a été annulée !'}, status=status.HTTP_400_BAD_REQUEST)
+            elif election.progress_status == ProgressChoiceEnum.PENDING.value:
+                return Response({"message": "Cette election n'est pas encore démarré !"}, status=status.HTTP_400_BAD_REQUEST)
 
         # Get the total number of voters
         voters_count = Vote.objects.filter(election=election).values('voter').distinct().count()

@@ -302,3 +302,10 @@ CURRENT_USER_ID = None
 
 print("DEBUG ------------>",DEBUG)
 
+"""
+{
+  "refresh": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTY3Nzk3OTI4MCwianRpIjoiODllMGNkMjFkZTM0NGMwYmFmMzYxNjUzNzM5NzdhZDAiLCJ1c2VyX2lkIjoieWFvbWFyaXVzc29kb2tpbkBnbWFpbC5jb20ifQ.NgV21NmkjbV4mYqskfw_jyT1UqRFsmegt0qjx3yatGA",
+  "access": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjc3NjMzNjgwLCJqdGkiOiIzYjVkYmYxODVmYWM0OGRlODM3NjNlMzkzOGQzMjdhOCIsInVzZXJfaWQiOiJ5YW9tYXJpdXNzb2Rva2luQGdtYWlsLmNvbSJ9.eROhQljSVuppRj83etLjjFO6iJj-fLSA-BtSWwwEp68"
+}
+
+"""
